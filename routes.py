@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from modules import db, Employee
+from modules import db, Employee, Client
 
 api = Blueprint('api', __name__, url_prefix='/api')
 index = Blueprint('index', __name__, url_prefix='/')
@@ -19,17 +19,40 @@ def put_employee(employee_name):
     db.session.commit()
     return 'done'
 
+##
+@api.route('/clients')
+def get_clients():
+    return jsonify([(lambda client: client.json())(client) for client in Client.query.all()])
+
+@api.route('/client/id/<int:client_id>')
+def get_client(client_id):
+    client = Client.query.get(client_id)
+    return jsonify(client.json()) if client else ''
+
+@api.route('/client/name/<string:client_name>')
+def put_client(client_name):
+    db.session.add(Client(name = client_name))
+    db.session.commit()
+    return 'done'
+
+@api.route('/client/surname/<string:client_surname>')
+def pt_client(client_surname):
+    db.session.add(Client(surname = client_surname))
+    db.session.commit()
+    return 'done'
+
 @index.route('/')
 @index.route('/index')
 def get_index():
     return '''
            <html>
               <title>
-                 Mega RESTful web service
+                 Pharm Web Service
               </title>
               <body>
-                  <h3>API:</h3>
-                  <a href = "./api/employees">Employee</a>
+                  <h3>MENU:</h3>
+                  <a href = "./api/employees">Employee</a><br>
+                  <a href = "./api/clients">Client</a>
               </body>
             </html>
            '''

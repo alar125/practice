@@ -21,3 +21,23 @@ class Position(db.Model):
 
      def json(self):
          return {"id": self.id, "name": self.name}
+
+##
+class Client(db.Model):
+    __tablename__ = 'clients'
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(120))
+    surname = db.Column(db.String(120))
+    building_id = db.Column(db.Integer, ForeignKey('building.id'))
+    building = relationship('Building')
+
+    def json(self):
+        return {"id": self.id, "name": self.name, "surname": self.surname, "building": self.building.json()}
+
+class Building(db.Model):
+     __tablename__ = 'building'
+     id = db.Column(db.Integer, primary_key = True)
+     name = db.Column(db.String(120))
+
+     def json(self):
+         return {"id": self.id, "name": self.name}
