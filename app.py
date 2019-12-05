@@ -1,5 +1,5 @@
 from flask import Flask
-from modules import db, Men, Client
+from modules import db, Employee, Position
 from routes import api, index
 
 app = Flask(__name__)
@@ -8,14 +8,13 @@ app.register_blueprint(index)
 db.init_app(app)
 with app.app_context():
     db.create_all()
-    db.session.add(Men(name = 'Bob'))
-    db.session.add(Men(name = 'Rocky'))
+    manager = Position(name = 'Manager')
+    developer = Position(name = 'Developer')
+    db.session.add(manager)
+    db.session.add(developer)
     db.session.commit()
-
-with app.app_context():
-    db.create_all()
-    db.session.add(Client(name = 'Mike', surname = 'Tompson'))
-    db.session.add(Client(name = 'Tom'))
+    db.session.add(Employee(name = 'Bob', position_id = manager.id))
+    db.session.add(Employee(name = 'Rocky', position_id = developer.id))
     db.session.commit()
 
 if __name__ == '__main__':
