@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify
 from modules import Men, db, Client
 
 api = Blueprint('api', __name__, url_prefix='/api')
+index = Blueprint('index', __name__, url_prefix='/')
 
 #class - Men
 @api.route('/mens')
@@ -40,3 +41,18 @@ def pt_client(client_surname):
     db.session.add(Client(surname = client_surname))
     db.session.commit()
     return 'done'
+
+@index.route('/')
+@index.route('/index')
+def get_index():
+    return '''
+           <html>
+              <title>
+                 Mega RESTful web service
+              </title>
+              <body>
+                  <h3>API:</h3>
+                  <a href = "./api/mens">Mens</a>
+              </body>
+            </html>
+           '''
