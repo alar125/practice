@@ -20,11 +20,12 @@ with app.app_context():
 with app.app_context():
     db.create_all()
     ph = Building(name = 'Planet of Health')
-    chamomile = Building(name = 'Chamomile')
+    ch = Building(name = 'Chamomile')
     db.session.add(ph)
-    db.session.add(chamomile)
+    db.session.add(ch)
     db.session.commit()
-    db.session.add(Client(name = 'Mike', surname = 'Tompson', building_id = ph.id))
+    db.session.add(Client(name = 'Ivan', surname = 'Ivanov', building_id = ph.id))
+    db.session.add(Client(name = 'Boris', surname = 'Britva', building_id = ch.id))
     db.session.commit()
 
 if __name__ == '__main__':
