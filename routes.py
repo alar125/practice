@@ -51,7 +51,6 @@ def get_index():
               </title>
               <body>
                   <h3>MENU:</h3>
-                  <a href = "./api/employees">Employee</a><br>
                   <a href = "./api/clients">Client</a>
               </body>
             </html>
