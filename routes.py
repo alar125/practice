@@ -46,7 +46,7 @@ def get_client(client_id):
 
 @api.route('/client/name/<string:client_name>/surname/<string:client_surname>/building/<string:building_name>')
 def put_client(client_name,client_surname,building_name):
-    building = Building.query.filter_by(name=building_name).all()[0]
+    building = Building.query.filter_by(name=building_name).one()
     db.session.add(Client(name = client_name,surname = client_surname, building_id = building.id))
     db.session.commit()
     return 'done'
